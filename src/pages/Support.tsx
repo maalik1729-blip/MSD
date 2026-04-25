@@ -229,11 +229,11 @@ const Support = () => {
                 >
                   For queries:{" "}
                   <a
-                    href="mailto:Mahasevadalorganization@gmail.com"
+                    href="mailto:mahasevadalorganization@gmail.com"
                     className="underline hover:text-[#c8440a] transition-colors"
                     style={{ color: "#b85c00" }}
                   >
-                    Mahasevadalorganization@gmail.com
+                    mahasevadalorganization@gmail.com
                   </a>
                   {" "}· +91 9994625690
                 </p>

@@ -57,9 +57,9 @@ const Header = () => {
 
       {/* ── Top Contact Bar (Desktop) ── */}
       <div className="hidden xl:flex justify-end items-center px-8 pt-3 pb-1.5 bg-orange-50/50 border-b border-orange-100/50 gap-4">
-        <a href="mailto:Mahasevadalorganization@gmail.com" className="flex items-center gap-1.5 text-[11px] xl:text-xs font-medium text-stone-600 hover:text-[#c8440a] transition-colors group" style={{ fontFamily: "'Inter', sans-serif" }}>
+        <a href="mailto:mahasevadalorganization@gmail.com" className="flex items-center gap-1.5 text-[11px] xl:text-xs font-medium text-stone-600 hover:text-[#c8440a] transition-colors group" style={{ fontFamily: "'Inter', sans-serif" }}>
           <Mail size={13} className="text-[#c8440a] opacity-80 group-hover:opacity-100" />
-          <span>Mahasevadalorganization@gmail.com</span>
+          <span>mahasevadalorganization@gmail.com</span>
         </a>
         <div className="w-px h-3 bg-stone-300"></div>
         <a href="tel:+919994625690" className="flex items-center gap-1.5 text-[11px] xl:text-xs font-medium text-stone-600 hover:text-[#c8440a] transition-colors group" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -98,7 +98,7 @@ const Header = () => {
             </Link>
 
             {/* Organisation name */}
-            <Link to="/" className="group flex flex-col justify-center">
+            <Link to="/" className="group flex flex-col justify-center items-center">
               <h1
                 className="text-lg md:text-xl font-serif font-bold tracking-wide leading-none"
                 style={{
@@ -117,6 +117,12 @@ const Header = () => {
                 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#b85c00" }}
               >
                 Maha Seva Dal
+              </p>
+              <p
+                className="text-[10px] font-semibold tracking-widest mt-0.5"
+                style={{ fontFamily: "'Inter', sans-serif", color: "#aaa", letterSpacing: "0.15em" }}
+              >
+                Est. 1947
               </p>
             </Link>
           </div>
@@ -468,9 +474,9 @@ const Header = () => {
 
             {/* Mobile Contact Info */}
             <div className="pt-4 mt-2 border-t border-gray-100 flex flex-col gap-3">
-              <a href="mailto:Mahasevadalorganization@gmail.com" className="flex items-center gap-2 text-sm font-medium text-stone-700" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <a href="mailto:mahasevadalorganization@gmail.com" className="flex items-center gap-2 text-sm font-medium text-stone-700" style={{ fontFamily: "'Inter', sans-serif" }}>
                 <Mail size={16} className="text-[#c8440a]" />
-                Mahasevadalorganization@gmail.com
+                mahasevadalorganization@gmail.com
               </a>
               <a href="tel:+919994625690" className="flex items-center gap-2 text-sm font-medium text-stone-700" style={{ fontFamily: "'Inter', sans-serif" }}>
                 <Phone size={16} className="text-[#c8440a]" />
