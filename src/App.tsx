@@ -12,6 +12,7 @@ import Events from "./pages/Events";
 import GuruPoornima from "./pages/GuruPoornima";
 import Mahashivratri from "./pages/Mahashivratri";
 import Appointment from "./pages/Appointment";
+import Support from "./pages/Support";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,8 @@ const App = () => (
           <Route path="/events/mahashivratri" element={<Mahashivratri />} />
           {/* Appointments */}
           <Route path="/appointment/:id" element={<Appointment />} />
+          {/* Support / Donate */}
+          <Route path="/support" element={<Support />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

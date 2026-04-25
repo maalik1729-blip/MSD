@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, ChevronUp, Mail, Phone } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp, Mail, Phone, Heart } from "lucide-react";
 import appointmentsData from "@/data/appointments.json";
 
 const navItems = [
@@ -367,8 +367,20 @@ const Header = () => {
               </ul>
             </nav>
 
-          {/* ── RIGHT: Mobile Toggle & Desktop Spacer ── */}
-          <div className="flex xl:hidden flex-1 justify-end items-center pr-2">
+          {/* ── RIGHT: Mobile Toggle & Support Button ── */}
+          <div className="flex xl:hidden flex-1 justify-end items-center pr-2 gap-2">
+            <Link
+              to="/support"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 hover:scale-105"
+              style={{
+                background: "linear-gradient(135deg, #FF9933, #c8440a)",
+                color: "#fff",
+                boxShadow: "0 0 12px rgba(255,153,51,0.5)",
+                fontFamily: "'Inter', sans-serif",
+              }}
+            >
+              <Heart size={12} fill="#fff" /> Support
+            </Link>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-md bg-orange-50 text-orange-700 focus:outline-none transition-colors border border-orange-100 shadow-sm"
@@ -377,7 +389,23 @@ const Header = () => {
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
-          <div className="hidden xl:block xl:w-[280px] flex-shrink-0" aria-hidden="true" />
+          {/* Desktop: Support Us button on right */}
+          <div className="hidden xl:flex xl:w-[280px] flex-shrink-0 justify-end items-center">
+            <Link
+              to="/support"
+              className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 hover:scale-105 animate-pulse-glow"
+              style={{
+                background: "linear-gradient(135deg, #FF9933, #c8440a)",
+                color: "#fff",
+                boxShadow: "0 0 18px rgba(255,153,51,0.55), 0 2px 8px rgba(200,68,10,0.3)",
+                fontFamily: "'Inter', sans-serif",
+                letterSpacing: "0.02em",
+              }}
+            >
+              <Heart size={15} fill="#fff" />
+              Support Us
+            </Link>
+          </div>
 
         </div>
       </div>
@@ -466,6 +494,15 @@ const Header = () => {
         @keyframes dropdownIn {
           from { opacity: 0; transform: translateX(-50%) translateY(-6px) scale(0.97); }
           to   { opacity: 1; transform: translateX(-50%) translateY(0)     scale(1);   }
+        }
+        @keyframes pulseGlow {
+          0%, 100% { box-shadow: 0 0 18px rgba(255,153,51,0.55), 0 2px 8px rgba(200,68,10,0.3); }
+          50%       { box-shadow: 0 0 28px rgba(255,153,51,0.85), 0 4px 16px rgba(200,68,10,0.5); }
+        }
+        .animate-pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+        @keyframes modalIn {
+          from { opacity: 0; transform: scale(0.94) translateY(16px); }
+          to   { opacity: 1; transform: scale(1)    translateY(0);     }
         }
       `}</style>
     </header>
