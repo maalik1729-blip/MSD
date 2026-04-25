@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp, Mail, Phone } from "lucide-react";
 import appointmentsData from "@/data/appointments.json";
 
 const navItems = [
@@ -55,9 +55,22 @@ const Header = () => {
       {/* BJP tricolour stripe at very top */}
       <div className="tricolour-bar" />
 
+      {/* ── Top Contact Bar (Desktop) ── */}
+      <div className="hidden xl:flex justify-end items-center px-8 pt-3 pb-1.5 bg-orange-50/50 border-b border-orange-100/50 gap-4">
+        <a href="mailto:Mahasevadalorganization@gmail.com" className="flex items-center gap-1.5 text-[11px] xl:text-xs font-medium text-stone-600 hover:text-[#c8440a] transition-colors group" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <Mail size={13} className="text-[#c8440a] opacity-80 group-hover:opacity-100" />
+          <span>Mahasevadalorganization@gmail.com</span>
+        </a>
+        <div className="w-px h-3 bg-stone-300"></div>
+        <a href="tel:+919994625690" className="flex items-center gap-1.5 text-[11px] xl:text-xs font-medium text-stone-600 hover:text-[#c8440a] transition-colors group" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <Phone size={13} className="text-[#c8440a] opacity-80 group-hover:opacity-100" />
+          <span>+91 9994625690</span>
+        </a>
+      </div>
+
       {/* ── Single-line header row ── */}
       <div className="w-full px-2 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-3 md:py-4">
+        <div className="flex items-center justify-between py-2 md:py-3">
 
           {/* ── LEFT: Brand + Logo ── */}
           <div className="flex items-center gap-3 lg:w-[280px] flex-shrink-0">
@@ -423,6 +436,18 @@ const Header = () => {
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Mobile Contact Info */}
+            <div className="pt-4 mt-2 border-t border-gray-100 flex flex-col gap-3">
+              <a href="mailto:Mahasevadalorganization@gmail.com" className="flex items-center gap-2 text-sm font-medium text-stone-700" style={{ fontFamily: "'Inter', sans-serif" }}>
+                <Mail size={16} className="text-[#c8440a]" />
+                Mahasevadalorganization@gmail.com
+              </a>
+              <a href="tel:+919994625690" className="flex items-center gap-2 text-sm font-medium text-stone-700" style={{ fontFamily: "'Inter', sans-serif" }}>
+                <Phone size={16} className="text-[#c8440a]" />
+                +91 9994625690
+              </a>
             </div>
           </div>
         </div>
