@@ -168,7 +168,7 @@ const Support = () => {
                 {/* Donate Now — UPI Deep Link */}
                 <div className="mt-8">
                   <a
-                    href="upi://pay?pa=925010021495473@axisbank&pn=MAHA%20SEVA%20DAL%20FOUNDATION&tn=Donation%20to%20Maha%20Seva%20Dal&cu=INR"
+                    href="upi://pay?pa=MAB.037349044880004@AXISBANK&pn=MAHA%20SEVA%20DAL%20FOUNDATION&tn=Donation%20to%20Maha%20Seva%20Dal&cu=INR"
                     className="inline-flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-bold text-base tracking-wide transition-all duration-200 hover:scale-[1.02] hover:shadow-2xl"
                     style={{
                       background: "linear-gradient(135deg, #FF9933 0%, #c8440a 60%, #b83200 100%)",
