@@ -39,6 +39,7 @@ const highlights = [
 
 const GuruPoornima = () => {
   const [showGallery, setShowGallery] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
     <PageLayout>
@@ -76,15 +77,13 @@ const GuruPoornima = () => {
             >
               <div className="tricolour-bar" />
               <img
-                src="/guru-poornima-banner.png"
+                src="/ChatGPT Image Apr 24, 2026, 06_43_49 PM.png"
                 alt="Guru Poornima Food Distribution Drive"
                 className="w-full block"
                 style={{ 
-                  objectFit: "contain", 
+                  objectFit: "cover", 
                   objectPosition: "center",
-                  width: "100%",
-                  height: "auto",
-                  maxHeight: "600px"
+                  width: "100%"
                 }}
               />
               <div className="tricolour-bar" />
@@ -351,6 +350,7 @@ const GuruPoornima = () => {
                   key={idx} 
                   className="rounded-xl overflow-hidden aspect-square bg-muted/20 relative cursor-pointer group"
                   style={{ border: "1px solid rgba(255,153,51,0.15)" }}
+                  onClick={() => setSelectedImage(`/poornima/${imgName}`)}
                 >
                   <img
                     src={`/poornima/${imgName}`}
@@ -376,6 +376,30 @@ const GuruPoornima = () => {
           }}
         />
       </div>
+
+      {/* Image Preview Lightbox */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 sm:p-8"
+          onClick={() => setSelectedImage(null)}
+          style={{ animation: "fadeIn 0.2s ease-out forwards" }}
+        >
+          <button 
+            className="absolute top-4 right-4 md:top-8 md:right-8 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-white/20 transition-colors"
+            onClick={() => setSelectedImage(null)}
+            aria-label="Close preview"
+          >
+            ✕
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Event Preview" 
+            className="max-w-full max-h-full object-contain rounded-md"
+            style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.5)" }}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </PageLayout>
   );
 };

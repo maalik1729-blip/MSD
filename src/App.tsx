@@ -11,6 +11,7 @@ import Legacy from "./pages/Legacy";
 import Events from "./pages/Events";
 import GuruPoornima from "./pages/GuruPoornima";
 import Mahashivratri from "./pages/Mahashivratri";
+import Appointment from "./pages/Appointment";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,8 @@ const App = () => (
           <Route path="/events" element={<Events />} />
           <Route path="/events/guru-poornima" element={<GuruPoornima />} />
           <Route path="/events/mahashivratri" element={<Mahashivratri />} />
+          {/* Appointments */}
+          <Route path="/appointment/:id" element={<Appointment />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

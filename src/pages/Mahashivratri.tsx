@@ -64,6 +64,7 @@ const msdPillars = [
 
 const Mahashivratri = () => {
   const [showGallery, setShowGallery] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
     <PageLayout>
@@ -101,14 +102,13 @@ const Mahashivratri = () => {
             >
               <div className="tricolour-bar" />
               <img
-                src="/msd-banner.png"
+                src="/ChatGPT Image Apr 25, 2026, 10_09_18 AM.png"
                 alt="Maha Seva Dal — Unity of People's, Development of Society, Power of Youth"
                 className="w-full block"
                 style={{ 
                   objectFit: "cover", 
                   objectPosition: "center",
-                  width: "100%",
-                  aspectRatio: "21/9"
+                  width: "100%"
                 }}
               />
               <div className="tricolour-bar" />
@@ -548,6 +548,7 @@ const Mahashivratri = () => {
                   key={idx} 
                   className="rounded-xl overflow-hidden aspect-square bg-muted/20 relative cursor-pointer group"
                   style={{ border: "1px solid rgba(19,136,8,0.15)" }}
+                  onClick={() => setSelectedImage(`/maha/${imgName}`)}
                 >
                   <img
                     src={`/maha/${imgName}`}
@@ -574,6 +575,30 @@ const Mahashivratri = () => {
           }}
         />
       </div>
+
+      {/* Image Preview Lightbox */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 sm:p-8"
+          onClick={() => setSelectedImage(null)}
+          style={{ animation: "fadeIn 0.2s ease-out forwards" }}
+        >
+          <button 
+            className="absolute top-4 right-4 md:top-8 md:right-8 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-white/20 transition-colors"
+            onClick={() => setSelectedImage(null)}
+            aria-label="Close preview"
+          >
+            ✕
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Event Preview" 
+            className="max-w-full max-h-full object-contain rounded-md"
+            style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.5)" }}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </PageLayout>
   );
 };

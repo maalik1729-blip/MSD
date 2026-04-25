@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
+import appointmentsData from "@/data/appointments.json";
 
 const navItems = [
   { path: "/",          label: "Home"            },
@@ -17,9 +19,15 @@ const eventItems = [
 const Header = () => {
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const [openAppts, setOpenAppts] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileEventsOpen, setMobileEventsOpen] = useState(false);
+  const [mobileApptsOpen, setMobileApptsOpen] = useState(false);
   const dropRef = useRef<HTMLLIElement>(null);
+  const apptsRef = useRef<HTMLLIElement>(null);
 
   const isEventActive = eventItems.some((e) => e.path === location.pathname);
+  const isApptActive = location.pathname.startsWith("/appointment/");
 
   // Close on outside click
   useEffect(() => {
@@ -27,32 +35,59 @@ const Header = () => {
       if (dropRef.current && !dropRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
+      if (apptsRef.current && !apptsRef.current.contains(e.target as Node)) {
+        setOpenAppts(false);
+      }
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   // Close on route change
-  useEffect(() => { setOpen(false); }, [location.pathname]);
+  useEffect(() => { 
+    setOpen(false); 
+    setOpenAppts(false);
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   return (
     <header className="sticky top-0 z-50 glass-nav">
       {/* BJP tricolour stripe at very top */}
       <div className="tricolour-bar" />
 
-      {/* ── 3-column header row ── */}
-      <div className="container">
-        <div className="flex items-center justify-between gap-4 py-4">
+      {/* ── Single-line header row ── */}
+      <div className="w-full px-2 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between py-3 md:py-4">
 
-          {/* ── LEFT: spacer / mirror of logo size on mobile hidden ── */}
-          <div className="w-16 md:w-20 flex-shrink-0 hidden md:block" aria-hidden="true" />
+          {/* ── LEFT: Brand + Logo ── */}
+          <div className="flex items-center gap-3 lg:w-[280px] flex-shrink-0">
+            {/* Logo Image */}
+            <Link to="/" aria-label="Maha Seva Dal Home" className="flex-shrink-0">
+              <div className="relative group w-12 h-12 md:w-14 md:h-14">
+                {/* Glow ring on hover */}
+                <div
+                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(circle, rgba(255,153,51,0.35) 0%, transparent 70%)",
+                    filter: "blur(6px)",
+                    transform: "scale(1.15)",
+                  }}
+                />
+                <img
+                  src="/msd-logo.png"
+                  alt="Maha Seva Dal Logo"
+                  className="w-full h-full object-contain rounded-full transition-transform duration-300 group-hover:scale-105 saffron-glow"
+                  style={{
+                    filter: "drop-shadow(0 2px 8px rgba(255,153,51,0.4))",
+                  }}
+                />
+              </div>
+            </Link>
 
-          {/* ── CENTER: brand + nav ── */}
-          <div className="flex flex-col items-center flex-1">
             {/* Organisation name */}
-            <Link to="/" className="mb-2 group text-center">
+            <Link to="/" className="group flex flex-col justify-center">
               <h1
-                className="text-2xl md:text-3xl font-serif font-bold tracking-wide"
+                className="text-lg md:text-xl font-serif font-bold tracking-wide leading-none"
                 style={{
                   fontFamily: "'Playfair Display', Georgia, serif",
                   background: "linear-gradient(135deg, #FF9933 0%, #c8440a 40%, #138808 100%)",
@@ -65,24 +100,17 @@ const Header = () => {
                 महा सेवा दल
               </h1>
               <p
-                className="text-center text-sm font-medium tracking-[0.2em] mt-0.5"
+                className="text-xs font-medium tracking-[0.2em] mt-1"
                 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#b85c00" }}
               >
                 Maha Seva Dal
               </p>
-              <p className="text-center text-xs tracking-[0.3em] text-muted-foreground/70 uppercase mt-0.5">
-                Est. 1947
-              </p>
             </Link>
+          </div>
 
-            {/* Lotus divider */}
-            <div className="lotus-divider w-52 mb-2">
-              <span className="lotus-icon">❀</span>
-            </div>
-
-            {/* Navigation */}
-            <nav className="w-full">
-              <ul className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 md:gap-x-6">
+          {/* ── CENTER: Desktop Navigation ── */}
+          <nav className="hidden xl:flex flex-1 justify-end xl:justify-center">
+            <ul className="flex items-center justify-center gap-x-3 xl:gap-x-5 py-1 px-2 whitespace-nowrap">
 
                 {navItems.map((item) => {
                   const isActive = location.pathname === item.path;
@@ -216,40 +244,189 @@ const Header = () => {
                   )}
                 </li>
 
+                {/* Appointments dropdown */}
+                <li ref={apptsRef} className="relative">
+                  <div className="inline-flex items-center gap-0.5">
+                    <span
+                      className="relative inline-block py-1 px-1 text-sm font-medium tracking-wide transition-all duration-200 cursor-pointer"
+                      onClick={() => setOpenAppts((v) => !v)}
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        color: (isApptActive || openAppts) ? "#c8440a" : "#57534e",
+                      }}
+                    >
+                      Organization Appointment
+                      {isApptActive && (
+                        <span
+                          className="absolute -bottom-0.5 left-0 right-0 h-0.5 rounded-full"
+                          style={{ background: "linear-gradient(90deg, #FF9933, #138808)" }}
+                        />
+                      )}
+                    </span>
+                    <button
+                      onClick={() => setOpenAppts((v) => !v)}
+                      className="inline-flex items-center justify-center w-5 h-5 rounded"
+                      style={{
+                        background: openAppts ? "rgba(255,153,51,0.12)" : "transparent",
+                        border: "none", outline: "none", cursor: "pointer",
+                        color: openAppts ? "#c8440a" : "#888",
+                      }}
+                      aria-haspopup="true"
+                      aria-expanded={openAppts}
+                    >
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none"
+                        style={{ transform: openAppts ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.22s ease" }}>
+                        <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.7"
+                          strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Dropdown panel */}
+                  {openAppts && (
+                    <div
+                      className="absolute top-full left-1/2 mt-2 rounded-xl overflow-hidden"
+                      style={{
+                        transform: "translateX(-50%)",
+                        minWidth: "260px",
+                        maxHeight: "80vh",
+                        overflowY: "auto",
+                        background: "rgba(255, 252, 245, 0.97)",
+                        backdropFilter: "blur(20px)",
+                        border: "1px solid rgba(255,153,51,0.22)",
+                        boxShadow: "0 8px 32px rgba(255,153,51,0.14), 0 2px 8px rgba(0,0,0,0.08)",
+                        zIndex: 100,
+                        animation: "dropdownIn 0.2s cubic-bezier(0.16,1,0.3,1) forwards",
+                      }}
+                    >
+                      <div className="tricolour-bar sticky top-0 z-10" />
+                      <div className="px-4 pt-2 pb-1 sticky top-[3px] bg-[rgba(255,252,245,0.95)] z-10" style={{ borderBottom: "1px solid rgba(255,153,51,0.12)" }}>
+                        <p className="text-xs font-bold tracking-widest uppercase"
+                          style={{ color: "#999", fontFamily: "'Inter', sans-serif" }}>
+                          Appointments
+                        </p>
+                      </div>
+
+                      {appointmentsData.map((appt) => {
+                        const isActive = location.pathname === `/appointment/${appt.id}`;
+                        return (
+                          <Link
+                            key={appt.id}
+                            to={`/appointment/${appt.id}`}
+                            className="flex items-start gap-3 px-4 py-3 transition-all duration-150 group"
+                            style={{
+                              background: isActive
+                                ? "linear-gradient(90deg, rgba(255,153,51,0.10), rgba(19,136,8,0.06))"
+                                : "transparent",
+                              borderLeft: isActive ? "3px solid #FF9933" : "3px solid transparent",
+                            }}
+                            onMouseEnter={(e) => {
+                              if (!isActive) (e.currentTarget as HTMLElement).style.background = "rgba(255,153,51,0.06)";
+                            }}
+                            onMouseLeave={(e) => {
+                              if (!isActive) (e.currentTarget as HTMLElement).style.background = "transparent";
+                            }}
+                          >
+                            <span
+                              className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm mt-0.5"
+                              style={{ background: "rgba(0,0,128,0.05)" }}
+                            >
+                              {appt.type === 'team' ? '👥' : '👤'}
+                            </span>
+                            <div>
+                              <p className="text-sm font-semibold leading-tight"
+                                style={{ fontFamily: "'Playfair Display', serif", color: isActive ? "#c8440a" : "#3d2c00" }}>
+                                {appt.region}
+                              </p>
+                              <p className="text-xs mt-0.5"
+                                style={{ color: "#999", fontFamily: "'Inter', sans-serif" }}>
+                                {appt.type === 'team' ? 'State Team' : appt.role}
+                              </p>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                      <div className="tricolour-bar sticky bottom-0 z-10" />
+                    </div>
+                  )}
+                </li>
+
               </ul>
             </nav>
-          </div>
 
-          {/* ── RIGHT: MSD Logo ── */}
-          <div className="flex-shrink-0 flex items-center justify-end">
-            <Link to="/" aria-label="Maha Seva Dal Home">
-              <div
-                className="relative group"
-                style={{ width: "72px", height: "72px" }}
-              >
-                {/* Glow ring on hover */}
-                <div
-                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{
-                    background: "radial-gradient(circle, rgba(255,153,51,0.35) 0%, transparent 70%)",
-                    filter: "blur(6px)",
-                    transform: "scale(1.15)",
-                  }}
-                />
-                <img
-                  src="/msd-logo.png"
-                  alt="Maha Seva Dal Logo"
-                  className="w-full h-full object-contain rounded-full transition-transform duration-300 group-hover:scale-105 saffron-glow"
-                  style={{
-                    filter: "drop-shadow(0 2px 8px rgba(255,153,51,0.4))",
-                  }}
-                />
-              </div>
-            </Link>
+          {/* ── RIGHT: Mobile Toggle & Desktop Spacer ── */}
+          <div className="flex xl:hidden flex-1 justify-end items-center pr-2">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-md bg-orange-50 text-orange-700 focus:outline-none transition-colors border border-orange-100 shadow-sm"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
+          <div className="hidden xl:block xl:w-[280px] flex-shrink-0" aria-hidden="true" />
 
         </div>
       </div>
+
+      {/* ── Mobile Navigation Menu ── */}
+      {isMobileMenuOpen && (
+        <div className="xl:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-t border-orange-100 shadow-xl max-h-[85vh] overflow-y-auto">
+          <div className="flex flex-col py-4 px-6 space-y-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="text-base font-semibold text-gray-800 pb-2 border-b border-gray-100"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                {item.label}
+              </Link>
+            ))}
+
+            {/* Mobile Events Dropdown */}
+            <div className="pb-2 border-b border-gray-100">
+              <button 
+                onClick={() => setMobileEventsOpen(!mobileEventsOpen)}
+                className="flex items-center justify-between w-full text-base font-semibold text-gray-800 pb-2"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                Events {mobileEventsOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </button>
+              {mobileEventsOpen && (
+                <div className="pl-4 pt-2 flex flex-col space-y-3">
+                  {eventItems.map((event) => (
+                    <Link key={event.path} to={event.path} className="flex items-center gap-3 text-sm text-gray-700">
+                      <span className="text-lg">{event.icon}</span> {event.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Appointments Dropdown */}
+            <div className="pb-2 border-b border-gray-100">
+              <button 
+                onClick={() => setMobileApptsOpen(!mobileApptsOpen)}
+                className="flex items-center justify-between w-full text-base font-semibold text-gray-800 pb-2"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                Organization Appointments {mobileApptsOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </button>
+              {mobileApptsOpen && (
+                <div className="pl-4 pt-2 flex flex-col space-y-3 border-l-2 border-orange-200 pb-4">
+                  {appointmentsData.map((appt) => (
+                    <Link key={appt.id} to={`/appointment/${appt.id}`} className="flex flex-col gap-0.5 text-sm py-1 pl-2">
+                      <span className="font-semibold text-orange-800">{appt.region}</span>
+                      <span className="text-xs text-gray-500">{appt.type === 'team' ? 'State Team' : appt.role}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Bottom shimmer line */}
       <div
