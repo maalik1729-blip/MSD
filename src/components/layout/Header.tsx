@@ -163,10 +163,10 @@ const Header = () => {
             <img src="https://res.cloudinary.com/wq9znxvs/image/upload/v1785928702/msd/brand/logo.png" alt="Maha Seva Dal Logo" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
           </div>
           <div className="flex flex-col">
-            <span className="font-serif text-lg font-semibold text-ink tracking-tight group-hover:text-[#FF6200] transition-colors leading-none">
+            <span className="font-serif text-lg font-semibold text-ink tracking-tight group-hover:text-[#FF6200] transition-colors leading-none" title="'महा सेवा दल">
               Maha Seva Dal
             </span>
-            <span className="text-[10px] text-muted-editorial uppercase tracking-widest leading-tight mt-0.5 font-semibold text-[#FF6200]">
+            <span className="text-[10px] text-muted-editorial uppercase tracking-widest leading-tight mt-0.5 font-semibold text-[#FF6200]" title="'महा सेवा दल">
               மஹா சேவா தளம் · 1947
             </span>
           </div>
@@ -196,8 +196,8 @@ const Header = () => {
             <button
               onClick={() => setOpenEvents((v) => !v)}
               className={`flex items-center gap-1 transition-colors py-1 ${isEventActive || location.pathname === "/events" || openEvents
-                  ? "text-[#FF6200] font-semibold"
-                  : "text-body-main hover:text-[#FF6200]"
+                ? "text-[#FF6200] font-semibold"
+                : "text-body-main hover:text-[#FF6200]"
                 }`}
             >
               Events
@@ -305,10 +305,10 @@ const Header = () => {
 
         {/* Right CTA Cluster */}
         <div className="hidden lg:flex items-center gap-4">
-          <Link to="/support" className="btn-primary-coral text-xs px-4 py-2">
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maalik1729@gmail.com&su=Support%20%26%20Donation%20Enquiry" target="_blank" rel="noopener noreferrer" className="btn-primary-coral text-xs px-4 py-2">
             <Heart size={14} />
             <span>Support & Donate</span>
-          </Link>
+          </a>
         </div>
 
         {/* Mobile Hamburger Toggle */}
@@ -444,9 +444,9 @@ const Header = () => {
 
             {/* Donate CTA */}
             <div className="pt-4">
-              <Link to="/support" className="btn-primary-coral w-full justify-center">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maalik1729@gmail.com&su=Support%20%26%20Donation%20Enquiry" target="_blank" rel="noopener noreferrer" className="btn-primary-coral w-full justify-center">
                 Support & Donate
-              </Link>
+              </a>
             </div>
 
           </nav>
