@@ -305,10 +305,10 @@ const Header = () => {
 
         {/* Right CTA Cluster */}
         <div className="hidden lg:flex items-center gap-4">
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maalik1729@gmail.com&su=Support%20%26%20Donation%20Enquiry" target="_blank" rel="noopener noreferrer" className="btn-primary-coral text-xs px-4 py-2">
+          <Link to="/support" className="btn-primary-coral text-xs px-4 py-2">
             <Heart size={14} />
             <span>Support & Donate</span>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Hamburger Toggle */}
@@ -444,9 +444,9 @@ const Header = () => {
 
             {/* Donate CTA */}
             <div className="pt-4">
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maalik1729@gmail.com&su=Support%20%26%20Donation%20Enquiry" target="_blank" rel="noopener noreferrer" className="btn-primary-coral w-full justify-center">
+              <Link to="/support" className="btn-primary-coral w-full justify-center">
                 Support & Donate
-              </a>
+              </Link>
             </div>
 
           </nav>
